@@ -2955,7 +2955,7 @@ re_literal returns [RELiteralExpression re] { re = null; }:
 	;
 	
 protected
-double_literal returns [DoubleLiteralExpression rle]
+double_literal returns [LiteralExpression  rle]
 	{
 		rle = null;
 		string val;
@@ -2974,6 +2974,14 @@ double_literal returns [DoubleLiteralExpression rle]
 		val = val.Substring(0, val.Length-1);
 		if (neg != null) val = neg.getText() + val;
 		rle = new DoubleLiteralExpression(SourceLocationFactory.ToLexicalInfo(single), PrimitiveParser.ParseDouble(single, val, true), true);
+	}
+  |
+  dec:DECIMAL
+  {
+    val = dec.getText();
+		val = val.Substring(0, val.Length-3); // "dec"
+		if (neg != null) val = neg.getText() + val;
+		rle = new DecimalLiteralExpression(ToLexicalInfo(dec), decimal.Parse(val, NumberStyles.Currency, CultureInfo.InvariantCulture));
 	}
 	;
 	
@@ -3178,6 +3186,7 @@ INT :
   	(
   		('l' | 'L') { $setType(LONG); } |
 		(('f' | 'F') { $setType(FLOAT); }) |
+		(("dec" | "DEC") { $setType(DECIMAL); }) |
   		(
  			(
  				{WSABooLexer.IsDigit(LA(2))}? 
@@ -3187,6 +3196,7 @@ INT :
  				)
 				(
 					(('f' | 'F') { $setType(FLOAT); }) |
+					(("dec" | "DEC") { $setType(DECIMAL); }) |
 					{ $setType(DOUBLE); }
 				)
  			)?
@@ -3200,6 +3210,7 @@ DOT : '.'
 		REVERSE_DIGIT_GROUP (('e'|'E')('+'|'-')? DIGIT_GROUP)?
 		(
 			(('f' | 'F')  { $setType(FLOAT); }) |
+			(("dec" | "DEC") { $setType(DECIMAL); }) |
 			(("ms" | 's' | 'm' | 'h' | 'd') { $setType(TIMESPAN); }) |
 			{$setType(DOUBLE);}
 		)

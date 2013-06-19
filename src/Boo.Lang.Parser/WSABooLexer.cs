@@ -151,27 +151,28 @@ using Boo.Lang.Parser.Util;
 		public const int RE_LITERAL = 116;
 		public const int DOUBLE = 117;
 		public const int FLOAT = 118;
-		public const int TIMESPAN = 119;
-		public const int ID_SUFFIX = 120;
-		public const int LINE_CONTINUATION = 121;
-		public const int INTERPOLATED_EXPRESSION = 122;
-		public const int INTERPOLATED_REFERENCE = 123;
-		public const int SL_COMMENT = 124;
-		public const int ML_COMMENT = 125;
-		public const int WS = 126;
-		public const int X_RE_LITERAL = 127;
-		public const int DQS_ESC = 128;
-		public const int SQS_ESC = 129;
-		public const int SESC = 130;
-		public const int RE_CHAR = 131;
-		public const int X_RE_CHAR = 132;
-		public const int RE_ESC = 133;
-		public const int DIGIT_GROUP = 134;
-		public const int REVERSE_DIGIT_GROUP = 135;
-		public const int AT_SYMBOL = 136;
-		public const int ID_LETTER = 137;
-		public const int DIGIT = 138;
-		public const int HEXDIGIT = 139;
+		public const int DECIMAL = 119;
+		public const int TIMESPAN = 120;
+		public const int ID_SUFFIX = 121;
+		public const int LINE_CONTINUATION = 122;
+		public const int INTERPOLATED_EXPRESSION = 123;
+		public const int INTERPOLATED_REFERENCE = 124;
+		public const int SL_COMMENT = 125;
+		public const int ML_COMMENT = 126;
+		public const int WS = 127;
+		public const int X_RE_LITERAL = 128;
+		public const int DQS_ESC = 129;
+		public const int SQS_ESC = 130;
+		public const int SESC = 131;
+		public const int RE_CHAR = 132;
+		public const int X_RE_CHAR = 133;
+		public const int RE_ESC = 134;
+		public const int DIGIT_GROUP = 135;
+		public const int REVERSE_DIGIT_GROUP = 136;
+		public const int AT_SYMBOL = 137;
+		public const int ID_LETTER = 138;
+		public const int DIGIT = 139;
+		public const int HEXDIGIT = 140;
 		
 		
 	protected int _skipWhitespaceRegion = 0;
@@ -809,7 +810,7 @@ _loop605_breakloop:			;
 		_ttype = NEWLINE;
 		
 		{ // ( ... )+
-			int _cnt749=0;
+			int _cnt755=0;
 			for (;;)
 			{
 				if ((cached_LA1=='\n'||cached_LA1=='\r') && (true) && (true))
@@ -851,12 +852,12 @@ _loop605_breakloop:			;
 				}
 				else
 				{
-					if (_cnt749 >= 1) { goto _loop749_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
+					if (_cnt755 >= 1) { goto _loop755_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
 				}
 				
-				_cnt749++;
+				_cnt755++;
 			}
-_loop749_breakloop:			;
+_loop755_breakloop:			;
 		}    // ( ... )+
 		if (0==inputState.guessing)
 		{
@@ -1049,7 +1050,35 @@ _loop610_breakloop:					;
 					break;
 				}
 				default:
+					if ((cached_LA1=='D'||cached_LA1=='d') && (cached_LA2=='E'||cached_LA2=='e'))
 					{
+						{
+							{
+								switch ( cached_LA1 )
+								{
+								case 'd':
+								{
+									match("dec");
+									break;
+								}
+								case 'D':
+								{
+									match("DEC");
+									break;
+								}
+								default:
+								{
+									throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());
+								}
+								 }
+							}
+							if (0==inputState.guessing)
+							{
+								_ttype = DECIMAL;
+							}
+						}
+					}
+					else {
 						{
 							{
 								if (((cached_LA1=='.'))&&(WSABooLexer.IsDigit(LA(2))))
@@ -1112,8 +1141,35 @@ _loop610_breakloop:					;
 										}
 									}
 									{
-										if ((cached_LA1=='F'||cached_LA1=='f'))
+										if ((cached_LA1=='D'||cached_LA1=='d') && (cached_LA2=='E'||cached_LA2=='e'))
 										{
+											{
+												{
+													switch ( cached_LA1 )
+													{
+													case 'd':
+													{
+														match("dec");
+														break;
+													}
+													case 'D':
+													{
+														match("DEC");
+														break;
+													}
+													default:
+													{
+														throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());
+													}
+													 }
+												}
+												if (0==inputState.guessing)
+												{
+													_ttype = DECIMAL;
+												}
+											}
+										}
+										else if ((cached_LA1=='F'||cached_LA1=='f')) {
 											{
 												{
 													switch ( cached_LA1 )
@@ -1289,11 +1345,11 @@ _loop610_breakloop:					;
 				}
 				default:
 				{
-					goto _loop780_breakloop;
+					goto _loop786_breakloop;
 				}
 				 }
 			}
-_loop780_breakloop:			;
+_loop786_breakloop:			;
 		}    // ( ... )*
 		if (_createToken && (null == _token) && (_ttype != Token.SKIP))
 		{
@@ -1309,7 +1365,7 @@ _loop780_breakloop:			;
 		_ttype = REVERSE_DIGIT_GROUP;
 		
 		{ // ( ... )+
-			int _cnt784=0;
+			int _cnt790=0;
 			for (;;)
 			{
 				if (((cached_LA1 >= '0' && cached_LA1 <= '9')) && ((cached_LA2 >= '0' && cached_LA2 <= '9')) && ((LA(3) >= '0' && LA(3) <= '9')))
@@ -1335,12 +1391,12 @@ _loop780_breakloop:			;
 				}
 				else
 				{
-					if (_cnt784 >= 1) { goto _loop784_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
+					if (_cnt790 >= 1) { goto _loop790_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
 				}
 				
-				_cnt784++;
+				_cnt790++;
 			}
-_loop784_breakloop:			;
+_loop790_breakloop:			;
 		}    // ( ... )+
 		if (_createToken && (null == _token) && (_ttype != Token.SKIP))
 		{
@@ -1414,10 +1470,35 @@ _loop784_breakloop:			;
 					
 				}
 				{
-					switch ( cached_LA1 )
+					if ((cached_LA1=='D'||cached_LA1=='d') && (cached_LA2=='E'||cached_LA2=='e'))
 					{
-					case 'F':  case 'f':
-					{
+						{
+							{
+								switch ( cached_LA1 )
+								{
+								case 'd':
+								{
+									match("dec");
+									break;
+								}
+								case 'D':
+								{
+									match("DEC");
+									break;
+								}
+								default:
+								{
+									throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());
+								}
+								 }
+							}
+							if (0==inputState.guessing)
+							{
+								_ttype = DECIMAL;
+							}
+						}
+					}
+					else if ((cached_LA1=='F'||cached_LA1=='f')) {
 						{
 							{
 								switch ( cached_LA1 )
@@ -1443,10 +1524,8 @@ _loop784_breakloop:			;
 								_ttype = FLOAT;
 							}
 						}
-						break;
 					}
-					case 'd':  case 'h':  case 'm':  case 's':
-					{
+					else if ((cached_LA1=='d'||cached_LA1=='h'||cached_LA1=='m'||cached_LA1=='s') && (true)) {
 						{
 							{
 								switch ( cached_LA1 )
@@ -1485,16 +1564,14 @@ _loop784_breakloop:			;
 								_ttype = TIMESPAN;
 							}
 						}
-						break;
 					}
-					default:
+					else {
+						if (0==inputState.guessing)
 						{
-							if (0==inputState.guessing)
-							{
-								_ttype = DOUBLE;
-							}
+							_ttype = DOUBLE;
 						}
-					break; }
+					}
+					
 				}
 			}
 			else {
@@ -1651,11 +1728,11 @@ _loop784_breakloop:			;
 			EnterSkipWhitespaceRegion();
 		}
 		{
-			bool synPredMatched653 = false;
+			bool synPredMatched659 = false;
 			if (((cached_LA1=='a'||cached_LA1=='m')))
 			{
-				int _m653 = mark();
-				synPredMatched653 = true;
+				int _m659 = mark();
+				synPredMatched659 = true;
 				inputState.guessing++;
 				try {
 					{
@@ -1680,12 +1757,12 @@ _loop784_breakloop:			;
 				}
 				catch (RecognitionException)
 				{
-					synPredMatched653 = false;
+					synPredMatched659 = false;
 				}
-				rewind(_m653);
+				rewind(_m659);
 				inputState.guessing--;
 			}
-			if ( synPredMatched653 )
+			if ( synPredMatched659 )
 			{
 				{
 					switch ( cached_LA1 )
@@ -1982,11 +2059,11 @@ _loop784_breakloop:			;
 		int _ttype; IToken _token=null; int _begin=text.Length;
 		_ttype = DIVISION;
 		
-		bool synPredMatched676 = false;
+		bool synPredMatched682 = false;
 		if (((cached_LA1=='/') && (cached_LA2=='*') && ((LA(3) >= '\u0003' && LA(3) <= '\ufffe'))))
 		{
-			int _m676 = mark();
-			synPredMatched676 = true;
+			int _m682 = mark();
+			synPredMatched682 = true;
 			inputState.guessing++;
 			try {
 				{
@@ -1995,12 +2072,12 @@ _loop784_breakloop:			;
 			}
 			catch (RecognitionException)
 			{
-				synPredMatched676 = false;
+				synPredMatched682 = false;
 			}
-			rewind(_m676);
+			rewind(_m682);
 			inputState.guessing--;
 		}
-		if ( synPredMatched676 )
+		if ( synPredMatched682 )
 		{
 			mML_COMMENT(false);
 			if (0==inputState.guessing)
@@ -2012,11 +2089,11 @@ _loop784_breakloop:			;
 			}
 		}
 		else {
-			bool synPredMatched678 = false;
+			bool synPredMatched684 = false;
 			if (((cached_LA1=='/') && (tokenSet_3_.member(cached_LA2)) && (tokenSet_4_.member(LA(3)))))
 			{
-				int _m678 = mark();
-				synPredMatched678 = true;
+				int _m684 = mark();
+				synPredMatched684 = true;
 				inputState.guessing++;
 				try {
 					{
@@ -2025,12 +2102,12 @@ _loop784_breakloop:			;
 				}
 				catch (RecognitionException)
 				{
-					synPredMatched678 = false;
+					synPredMatched684 = false;
 				}
-				rewind(_m678);
+				rewind(_m684);
 				inputState.guessing--;
 			}
-			if ( synPredMatched678 )
+			if ( synPredMatched684 )
 			{
 				mRE_LITERAL(false);
 				if (0==inputState.guessing)
@@ -2058,11 +2135,11 @@ _loop784_breakloop:			;
 									}
 									else
 									{
-										goto _loop683_breakloop;
+										goto _loop689_breakloop;
 									}
 									
 								}
-_loop683_breakloop:								;
+_loop689_breakloop:								;
 							}    // ( ... )*
 							if (0==inputState.guessing)
 							{
@@ -2120,11 +2197,11 @@ _loop683_breakloop:								;
 					match('*');
 				}
 				else {
-					bool synPredMatched734 = false;
+					bool synPredMatched740 = false;
 					if (((cached_LA1=='/') && (cached_LA2=='*') && ((LA(3) >= '\u0003' && LA(3) <= '\ufffe'))))
 					{
-						int _m734 = mark();
-						synPredMatched734 = true;
+						int _m740 = mark();
+						synPredMatched740 = true;
 						inputState.guessing++;
 						try {
 							{
@@ -2133,12 +2210,12 @@ _loop683_breakloop:								;
 						}
 						catch (RecognitionException)
 						{
-							synPredMatched734 = false;
+							synPredMatched740 = false;
 						}
-						rewind(_m734);
+						rewind(_m740);
 						inputState.guessing--;
 					}
-					if ( synPredMatched734 )
+					if ( synPredMatched740 )
 					{
 						mML_COMMENT(false);
 					}
@@ -2152,11 +2229,11 @@ _loop683_breakloop:								;
 					}
 					else
 					{
-						goto _loop736_breakloop;
+						goto _loop742_breakloop;
 					}
 					}
 				}
-_loop736_breakloop:				;
+_loop742_breakloop:				;
 			}    // ( ... )*
 			match("*/");
 			if (0==inputState.guessing)
@@ -2181,7 +2258,7 @@ _loop736_breakloop:				;
 		
 		match('/');
 		{ // ( ... )+
-			int _cnt766=0;
+			int _cnt772=0;
 			for (;;)
 			{
 				if ((tokenSet_3_.member(cached_LA1)))
@@ -2190,12 +2267,12 @@ _loop736_breakloop:				;
 				}
 				else
 				{
-					if (_cnt766 >= 1) { goto _loop766_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
+					if (_cnt772 >= 1) { goto _loop772_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
 				}
 				
-				_cnt766++;
+				_cnt772++;
 			}
-_loop766_breakloop:			;
+_loop772_breakloop:			;
 		}    // ( ... )+
 		match('/');
 		if (_createToken && (null == _token) && (_ttype != Token.SKIP))
@@ -2414,12 +2491,12 @@ _loop766_breakloop:			;
 			for (;;)
 			{
 				// nongreedy exit test
-				if ((cached_LA1=='"') && (cached_LA2=='"') && (LA(3)=='"')) goto _loop706_breakloop;
-				bool synPredMatched700 = false;
+				if ((cached_LA1=='"') && (cached_LA2=='"') && (LA(3)=='"')) goto _loop712_breakloop;
+				bool synPredMatched706 = false;
 				if (((cached_LA1=='$') && (cached_LA2=='('||cached_LA2=='{') && ((LA(3) >= '\u0003' && LA(3) <= '\ufffe'))))
 				{
-					int _m700 = mark();
-					synPredMatched700 = true;
+					int _m706 = mark();
+					synPredMatched706 = true;
 					inputState.guessing++;
 					try {
 						{
@@ -2439,12 +2516,12 @@ _loop766_breakloop:			;
 					}
 					catch (RecognitionException)
 					{
-						synPredMatched700 = false;
+						synPredMatched706 = false;
 					}
-					rewind(_m700);
+					rewind(_m706);
 					inputState.guessing--;
 				}
-				if ( synPredMatched700 )
+				if ( synPredMatched706 )
 				{
 					if (0==inputState.guessing)
 					{
@@ -2456,11 +2533,11 @@ _loop766_breakloop:			;
 					mINTERPOLATED_EXPRESSION(false);
 				}
 				else {
-					bool synPredMatched702 = false;
+					bool synPredMatched708 = false;
 					if (((cached_LA1=='$') && (tokenSet_0_.member(cached_LA2)) && ((LA(3) >= '\u0003' && LA(3) <= '\ufffe'))))
 					{
-						int _m702 = mark();
-						synPredMatched702 = true;
+						int _m708 = mark();
+						synPredMatched708 = true;
 						inputState.guessing++;
 						try {
 							{
@@ -2470,12 +2547,12 @@ _loop766_breakloop:			;
 						}
 						catch (RecognitionException)
 						{
-							synPredMatched702 = false;
+							synPredMatched708 = false;
 						}
-						rewind(_m702);
+						rewind(_m708);
 						inputState.guessing--;
 					}
-					if ( synPredMatched702 )
+					if ( synPredMatched708 )
 					{
 						if (0==inputState.guessing)
 						{
@@ -2487,11 +2564,11 @@ _loop766_breakloop:			;
 						mINTERPOLATED_REFERENCE(false);
 					}
 					else {
-						bool synPredMatched704 = false;
+						bool synPredMatched710 = false;
 						if (((cached_LA1=='\\') && (cached_LA2=='$') && ((LA(3) >= '\u0003' && LA(3) <= '\ufffe'))))
 						{
-							int _m704 = mark();
-							synPredMatched704 = true;
+							int _m710 = mark();
+							synPredMatched710 = true;
 							inputState.guessing++;
 							try {
 								{
@@ -2500,12 +2577,12 @@ _loop766_breakloop:			;
 							}
 							catch (RecognitionException)
 							{
-								synPredMatched704 = false;
+								synPredMatched710 = false;
 							}
-							rewind(_m704);
+							rewind(_m710);
 							inputState.guessing--;
 						}
-						if ( synPredMatched704 )
+						if ( synPredMatched710 )
 						{
 							_saveIndex = text.Length;
 							match('\\');
@@ -2522,11 +2599,11 @@ _loop766_breakloop:			;
 						}
 						else
 						{
-							goto _loop706_breakloop;
+							goto _loop712_breakloop;
 						}
 						}}
 					}
-_loop706_breakloop:					;
+_loop712_breakloop:					;
 				}    // ( ... )*
 				_saveIndex = text.Length;
 				match("\"\"\"");
@@ -2627,11 +2704,11 @@ _loop706_breakloop:					;
 					{    // ( ... )*
 						for (;;)
 						{
-							bool synPredMatched712 = false;
+							bool synPredMatched718 = false;
 							if (((cached_LA1=='$') && (cached_LA2=='('||cached_LA2=='{') && (tokenSet_5_.member(LA(3)))))
 							{
-								int _m712 = mark();
-								synPredMatched712 = true;
+								int _m718 = mark();
+								synPredMatched718 = true;
 								inputState.guessing++;
 								try {
 									{
@@ -2651,12 +2728,12 @@ _loop706_breakloop:					;
 								}
 								catch (RecognitionException)
 								{
-									synPredMatched712 = false;
+									synPredMatched718 = false;
 								}
-								rewind(_m712);
+								rewind(_m718);
 								inputState.guessing--;
 							}
-							if ( synPredMatched712 )
+							if ( synPredMatched718 )
 							{
 								if (0==inputState.guessing)
 								{
@@ -2668,11 +2745,11 @@ _loop706_breakloop:					;
 								mINTERPOLATED_EXPRESSION(false);
 							}
 							else {
-								bool synPredMatched714 = false;
+								bool synPredMatched720 = false;
 								if (((cached_LA1=='$') && (tokenSet_0_.member(cached_LA2)) && (tokenSet_5_.member(LA(3)))))
 								{
-									int _m714 = mark();
-									synPredMatched714 = true;
+									int _m720 = mark();
+									synPredMatched720 = true;
 									inputState.guessing++;
 									try {
 										{
@@ -2682,12 +2759,12 @@ _loop706_breakloop:					;
 									}
 									catch (RecognitionException)
 									{
-										synPredMatched714 = false;
+										synPredMatched720 = false;
 									}
-									rewind(_m714);
+									rewind(_m720);
 									inputState.guessing--;
 								}
-								if ( synPredMatched714 )
+								if ( synPredMatched720 )
 								{
 									if (0==inputState.guessing)
 									{
@@ -2708,11 +2785,11 @@ _loop706_breakloop:					;
 								}
 								else
 								{
-									goto _loop716_breakloop;
+									goto _loop722_breakloop;
 								}
 								}
 							}
-_loop716_breakloop:							;
+_loop722_breakloop:							;
 						}    // ( ... )*
 						_saveIndex = text.Length;
 						match('"');
@@ -2811,11 +2888,11 @@ _loop716_breakloop:							;
 				}
 				else
 				{
-					goto _loop722_breakloop;
+					goto _loop728_breakloop;
 				}
 				
 			}
-_loop722_breakloop:			;
+_loop728_breakloop:			;
 		}    // ( ... )*
 		_saveIndex = text.Length;
 		match('\'');
@@ -2889,11 +2966,11 @@ _loop722_breakloop:			;
 				}
 				else
 				{
-					goto _loop726_breakloop;
+					goto _loop732_breakloop;
 				}
 				
 			}
-_loop726_breakloop:			;
+_loop732_breakloop:			;
 		}    // ( ... )*
 		_saveIndex = text.Length;
 		match('`');
@@ -2923,11 +3000,11 @@ _loop726_breakloop:			;
 				}
 				else
 				{
-					goto _loop730_breakloop;
+					goto _loop736_breakloop;
 				}
 				
 			}
-_loop730_breakloop:			;
+_loop736_breakloop:			;
 		}    // ( ... )*
 		if (0==inputState.guessing)
 		{
@@ -2950,7 +3027,7 @@ _loop730_breakloop:			;
 		_ttype = WS;
 		
 		{ // ( ... )+
-			int _cnt739=0;
+			int _cnt745=0;
 			for (;;)
 			{
 				switch ( cached_LA1 )
@@ -2976,12 +3053,12 @@ _loop730_breakloop:			;
 				}
 				default:
 				{
-					if (_cnt739 >= 1) { goto _loop739_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
+					if (_cnt745 >= 1) { goto _loop745_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
 				}
 				break; }
-				_cnt739++;
+				_cnt745++;
 			}
-_loop739_breakloop:			;
+_loop745_breakloop:			;
 		}    // ( ... )+
 		if (0==inputState.guessing)
 		{
@@ -3022,7 +3099,7 @@ _loop739_breakloop:			;
 		text.Length = _saveIndex;
 		match('/');
 		{ // ( ... )+
-			int _cnt743=0;
+			int _cnt749=0;
 			for (;;)
 			{
 				if ((tokenSet_10_.member(cached_LA1)))
@@ -3031,12 +3108,12 @@ _loop739_breakloop:			;
 				}
 				else
 				{
-					if (_cnt743 >= 1) { goto _loop743_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
+					if (_cnt749 >= 1) { goto _loop749_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
 				}
 				
-				_cnt743++;
+				_cnt749++;
 			}
-_loop743_breakloop:			;
+_loop749_breakloop:			;
 		}    // ( ... )+
 		match('/');
 		if (0==inputState.guessing)
@@ -3399,7 +3476,7 @@ _loop743_breakloop:			;
 			case '8':  case '9':
 			{
 				{ // ( ... )+
-					int _cnt774=0;
+					int _cnt780=0;
 					for (;;)
 					{
 						if (((cached_LA1 >= '0' && cached_LA1 <= '9')) && (tokenSet_5_.member(cached_LA2)) && (true))
@@ -3408,12 +3485,12 @@ _loop743_breakloop:			;
 						}
 						else
 						{
-							if (_cnt774 >= 1) { goto _loop774_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
+							if (_cnt780 >= 1) { goto _loop780_breakloop; } else { throw new NoViableAltForCharException(cached_LA1, getFilename(), getLine(), getColumn());; }
 						}
 						
-						_cnt774++;
+						_cnt780++;
 					}
-_loop774_breakloop:					;
+_loop780_breakloop:					;
 				}    // ( ... )+
 				break;
 			}
