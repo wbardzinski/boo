@@ -3126,7 +3126,7 @@ namespace Boo.Lang.Compiler.Steps
 				case BinaryOperatorType.Or:
 				case BinaryOperatorType.And:
 					{
-						BindExpressionType(node, GetMostGenericType(node));
+                        BindConditionalOperator(node);
 						break;
 					}
 
@@ -3181,7 +3181,7 @@ namespace Boo.Lang.Compiler.Steps
 					}
 			}
 		}
-
+        
 		IType GetMostGenericType(BinaryExpression node)
 		{
 			return GetMostGenericType(GetExpressionType(node.Left), GetExpressionType(node.Right));
@@ -3222,6 +3222,24 @@ namespace Boo.Lang.Compiler.Steps
 			if (actual.IsEnum) return true;
 			return TypeSystemServices.IsIntegerNumber(actual);
 		}
+
+        void BindConditionalOperator(BinaryExpression node)
+        {
+            var leftExpressionType = GetExpressionType(node.Left);
+            var rightExpressionType = GetExpressionType(node.Right);
+            if (TypeSystemServices.IsNullable(leftExpressionType) && !TypeSystemServices.IsNullable(rightExpressionType))
+            {
+                node.Right = CreateNullableInstantiation(node.Right, leftExpressionType);
+                Visit(node.Right);
+            }
+            if (!TypeSystemServices.IsNullable(leftExpressionType) && TypeSystemServices.IsNullable(rightExpressionType))
+            {
+                node.Left = CreateNullableInstantiation(node.Left, rightExpressionType);
+                Visit(node.Left);
+            }
+
+            BindExpressionType(node, GetMostGenericType(node));
+        }
 
 		void BindEnumOperation(BinaryExpression node)
 		{
