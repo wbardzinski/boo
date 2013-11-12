@@ -1361,26 +1361,36 @@ namespace Boo.Lang.Compiler.Steps
 		static bool CanResolveReturnType(InternalMethod method)
 		{
 			var expressions = method.ReturnExpressions;
-			if (null != expressions)
-			{
-				foreach (var expression in expressions)
-				{
-					IType type = expression.ExpressionType;
-					if (type == null || TypeSystemServices.IsUnknown(type))
-						return false;
-				}
-			}
-			return true;
+            return CanResolveReturnType(expressions);
 		}
+
+        static bool CanResolveReturnType(ExpressionCollection expressions)
+        {
+            if (null != expressions)
+            {
+                foreach (var expression in expressions)
+                {
+                    IType type = expression.ExpressionType;
+                    if (type == null || TypeSystemServices.IsUnknown(type))
+                        return false;
+                }
+            }
+            return true;
+        }
 
 		void ResolveReturnType(InternalMethod entity)
 		{
 			var method = entity.Method;
-			method.ReturnType = entity.ReturnExpressions == null
-				? CodeBuilder.CreateTypeReference(TypeSystemServices.VoidType)
-				: GetMostGenericTypeReference(entity.ReturnExpressions);
+            method.ReturnType = ResolveReturnType(entity.ReturnExpressions);
 			TraceReturnType(method, entity);
 		}
+
+        TypeReference ResolveReturnType(ExpressionCollection expressions)
+        {
+            return expressions == null
+                ? CodeBuilder.CreateTypeReference(TypeSystemServices.VoidType)
+                : GetMostGenericTypeReference(expressions);
+        }
 
 		private TypeReference GetMostGenericTypeReference(ExpressionCollection expressions)
 		{
@@ -2511,10 +2521,17 @@ namespace Boo.Lang.Compiler.Steps
 			}
 
 			IType returnType = _currentMethod.ReturnType;
-			if (TypeSystemServices.IsUnknown(returnType))
-				_currentMethod.AddReturnExpression(node.Expression);
-			else
-				AssertTypeCompatibility(node.Expression, returnType, expressionType);
+            if (TypeSystemServices.IsUnknown(returnType))
+            {
+                //fix up return type so that we know if it is nullable
+                _currentMethod.AddReturnExpression(node.Expression);
+                if (CanResolveReturnType(_currentMethod.ReturnExpressions))
+                {
+                    returnType = TypeSystemServices.GetType(ResolveReturnType(_currentMethod.ReturnExpressions));
+                }
+            }
+            else
+                AssertTypeCompatibility(node.Expression, returnType, expressionType);
 
 			//bind to nullable Value if needed
 			if (TypeSystemServices.IsNullable(expressionType) && !TypeSystemServices.IsNullable(returnType))
@@ -4166,13 +4183,14 @@ namespace Boo.Lang.Compiler.Steps
 
 				case EntityType.Field:
 					{
-						eval.Arguments.Add(
-							CodeBuilder.CreateAssignment(
-								pair.First.LexicalInfo,
-								CodeBuilder.CreateMemberReference(
-									instance.CloneNode(),
-									(IMember)entity),
-								pair.Second));
+                        var assignment = CodeBuilder.CreateAssignment(
+                                pair.First.LexicalInfo,
+                                CodeBuilder.CreateMemberReference(
+                                    instance.CloneNode(),
+                                    (IMember)entity),
+                                pair.Second);
+                        Visit(assignment);
+						eval.Arguments.Add(assignment);
 						break;
 					}
 
@@ -4187,13 +4205,14 @@ namespace Boo.Lang.Compiler.Steps
 						else
 						{
 							//EnsureRelatedNodeWasVisited(pair.First, setter);
-							eval.Arguments.Add(
-								CodeBuilder.CreateAssignment(
-									pair.First.LexicalInfo,
-									CodeBuilder.CreateMemberReference(
-										instance.CloneNode(),
-										property),
-									pair.Second));
+                            var assignment = CodeBuilder.CreateAssignment(
+                                    pair.First.LexicalInfo,
+                                    CodeBuilder.CreateMemberReference(
+                                        instance.CloneNode(),
+                                        property),
+                                    pair.Second);
+                            Visit(assignment);
+							eval.Arguments.Add(assignment);
 						}
 						break;
 					}
