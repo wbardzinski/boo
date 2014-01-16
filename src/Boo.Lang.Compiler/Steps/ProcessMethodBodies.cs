@@ -3756,7 +3756,7 @@ namespace Boo.Lang.Compiler.Steps
 			return NameResolutionService.ResolveExtension(extensionNamespace, targetReference.Name);
 		}
 
-		private static bool ResolvedAsExtension(MethodInvocationExpression node)
+		protected static bool ResolvedAsExtension(MethodInvocationExpression node)
 		{
 			if (node.ContainsAnnotation(ResolvedAsExtensionAnnotation)
 				|| node.Target.ContainsAnnotation(ResolvedAsExtensionAnnotation))
@@ -4089,7 +4089,7 @@ namespace Boo.Lang.Compiler.Steps
 			}
 		}
 
-		private MemberReferenceExpression EnsureMemberReferenceForExtension(MethodInvocationExpression node)
+		protected MemberReferenceExpression EnsureMemberReferenceForExtension(MethodInvocationExpression node)
 		{
 			Expression target = node.Target;
 			GenericReferenceExpression gre = target as GenericReferenceExpression;
@@ -4107,7 +4107,7 @@ namespace Boo.Lang.Compiler.Steps
 			return memberRef;
 		}
 
-		private SelfLiteralExpression CreateSelfReference()
+		protected SelfLiteralExpression CreateSelfReference()
 		{
 			return CodeBuilder.CreateSelfReference(CurrentType);
 		}
